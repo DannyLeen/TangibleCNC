@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": "TangibleCNC",
+			"path": "/Users/Danny/Documents/platformio/Projects/TangibleCNC"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.styl": "javascript",
+			"*.tcc": "cpp",
+			"deque": "cpp",
+			"string": "cpp",
+			"unordered_map": "cpp",
+			"unordered_set": "cpp",
+			"vector": "cpp",
+			"system_error": "cpp"
+		}
+	}
+}
