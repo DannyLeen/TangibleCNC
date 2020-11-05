@@ -18,16 +18,14 @@ Ui_Menu::Ui_Menu() {
 }
 
 void Ui_Menu::initScreen() {
-    TFT_eSPI tft = TFT_eSPI();
-    tft.init();
+    TFT_eSPI tft_ = TFT_eSPI();
+    tft_.init();
        if (TFT_BL > 0) {
         pinMode(TFT_BL, OUTPUT);
         digitalWrite(TFT_BL, HIGH);
     }
-    tft.setRotation(0);
-    tft.fillScreen(TFT_WHITE);
-    tft.setTextSize(1);
-    Serial.println(tft.height());
+    tft_.setRotation(0);
+   
 }
 
 
@@ -63,16 +61,40 @@ void Ui_Menu::initUiMenu() {
       //}
     //}
 }
-void Ui_Menu::wait(int32_t x, int32_t y, int32_t r){
-  tft_.fillCircle(x, y, r, TFT_BLACK);
+void Ui_Menu::wait(boolean waiting){
+  if (waiting){
+     if (moveDot_ < TFT_WIDTH/2){
+      tft_.fillCircle(80 +moveDot_, TFT_HEIGHT - 6,  2, TFT_BLACK);
+       moveDot_ += 8;
+     }
+     else{
+       tft_.fillRect(0, TFT_HEIGHT - 15, TFT_WIDTH , TFT_HEIGHT , TFT_WHITE);
+       moveDot_ = 0;
+     }
+
+  }
+  else{
+  //  tft_.fillRect(0, TFT_HEIGHT - 15, TFT_WIDTH , TFT_HEIGHT , TFT_WHITE);
+     moveDot_ = 0;
+     setFooter("connected");
+  }
 }
 
 void Ui_Menu::updateUi() {
     tft_.fillScreen(TFT_BLACK);
-    tft_.fillRoundRect(-20, -5, tft_.width() , 40, 10, TFT_GOLD);
+    float rectWidth = title_.length() * 15;
+    Serial.println(title_.length());
+    tft_.fillRoundRect(-20, -10, rectWidth +25 , 40, 8, TFT_GOLD);
     tft_.setTextColor(TFT_WHITE);
-    tft_.setFreeFont(FF18);
-    tft_.drawString(title_, 5, 8);
+    tft_.setTextSize(2);
+    tft_.drawString(title_, 10, 8);
+
+
+    tft_.fillRect(0, TFT_HEIGHT - 15, TFT_WIDTH , TFT_HEIGHT , TFT_WHITE);
+    tft_.setTextColor(TFT_BLACK);
+    tft_.setTextSize(1);
+    Serial.println(text_);
+    tft_.drawString(text_, 5, TFT_HEIGHT - 10);
     Serial.println("update");
 
   //  tft.fillScreen(TFT_BLACK);
@@ -161,7 +183,12 @@ void Ui_Menu::ui_degrees(int posX, int posY) {
 }
 
 
+void Ui_Menu::setFooter(String footerText) {
 
+  text_ = footerText;
+  updateUi();
+
+}
 
 void Ui_Menu::setTitle(String title) {
 
@@ -170,13 +197,14 @@ void Ui_Menu::setTitle(String title) {
 
 }
 
-void Ui_Menu::setText(String text) {
-  tft_.fillScreen(TFT_WHITE);
-  tft_.setTextColor(TFT_BLACK);
-  tft_.drawString(text, 5, TFT_HEIGHT/2);
- // updateUi();
-
+void Ui_Menu::setWifiSymbol( int bars){
+    for (int b=0; b <= bars; b++) {
+        // display.fillRect(59 + (b*5),33 - (b*5),3,b*5,WHITE); 
+        tft_.fillRect((TFT_WIDTH -17) + (b*2) ,(TFT_HEIGHT -2) - (b*2),1,b*2,TFT_GREEN); 
+      }
+ 
 }
+
 
 
 /////////////////////////////////////////////////////////////////

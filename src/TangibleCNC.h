@@ -29,17 +29,18 @@ class TangibleCNC {
 
   private:
     ServerCommunication ServerCommunicationObj;
-    Ui_Menu Ui_MenuObj;
-    Move MoveObj;
+    
+
 
   public:
     TangibleCNC(String firmware);
     bool setWiFi(String wifiSSID, String wifiPassword);
     bool setFirebase(String hostName, String authKey, String path);
-    bool setBlockType(String Title);
     void screenUpdate();
     void loop();
-    UserInput UserInputObj;
+    Ui_Menu Ui_MenuObj;
+    
+    
 };
 
 

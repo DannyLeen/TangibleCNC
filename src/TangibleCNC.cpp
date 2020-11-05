@@ -7,15 +7,16 @@
 
 #include "Arduino.h"
 #include "TangibleCNC.h"
-#include "GPIO/PushButton.h"
 
 ////////////////////////////////////////////////////////////
 
 TangibleCNC::TangibleCNC(String firmware){
+
   Serial.begin(115200);
   Serial.println(firmware);
   Move MoveObj;
- // UserInput UserInputObj;
+  //String menuItems[] ={"Move", "Rotate", "Offset", "Rectangle"}; 
+
   //Ui_MenuObj.initUiMenu();  
 }
 
@@ -29,9 +30,9 @@ bool TangibleCNC::setFirebase(String hostName, String authKey, String path) {
 }
 
 
-bool  TangibleCNC::setBlockType(String Type) {
+
   
-  if (Type == "Move") {
+ /* if (Type == "Move") {
     Ui_MenuObj.setTitle( MoveObj.getTitle());
     Serial.println(MoveObj.getTitle());
     // Ui_MenuObj.setParameters(MoveObj.getParameters());
@@ -43,16 +44,21 @@ bool  TangibleCNC::setBlockType(String Type) {
   }
   else {
     return false;
-  }
+  }*/
 
-}
+//}
 
 void TangibleCNC::screenUpdate() {
   Ui_MenuObj.updateUi();
 }
 
 void TangibleCNC::loop() {
-  Ui_MenuObj.updateUi();
+  Ui_MenuObj.setWifiSymbol(ServerCommunicationObj.getBarsSignal());
+ // Ui_MenuObj.updateUi();
   //  MoveObj.Loop();
-  UserInputObj.loop();
+   // if(UserInputObj.changeMenu()){
+      //next blocktype
+   //   Serial.println("next");
+  //  }
+
 }

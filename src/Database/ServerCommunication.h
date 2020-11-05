@@ -35,6 +35,7 @@ class ServerCommunication {
     String setupFirebase(String hostNameFireBase, String authKeyFireBase, String path);
     String pushDate(String subPath, String dataToPush);
     String getFireBasePath();
+    int getBarsSignal();
 };
 
 

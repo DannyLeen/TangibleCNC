@@ -27,6 +27,7 @@ class Ui_Menu {
   private:
     String title_;
     String text_;
+    int moveDot_ = 0;
     TFT_eSPI tft_ = TFT_eSPI();
     String xyz[3] = {"X:", "Y:", "Z:"};
     int xyzValue[3] = {0, 0, 0};
@@ -48,9 +49,9 @@ class Ui_Menu {
     void ui_z(int32_t posX, int32_t pos);
     void ui_motorNumber(int32_t posX, int32_t posY);
     void ui_rotate(int32_t posX, int32_t pos);
-    void wait(int32_t x, int32_t y, int32_t r);
-    void setText(String text);
-
+    void wait(boolean waiting);
+    void setWifiSymbol(int bars);
+    void setFooter(String footerText);
     Ui_Menu();
     void setTitle(String title);
     void updateUi();

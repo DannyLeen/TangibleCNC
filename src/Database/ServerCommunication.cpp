@@ -16,22 +16,20 @@
 bool ServerCommunication::setupWiFi(String wifiSSID, String wifiPassword, Ui_Menu Ui_MenuObj) {
   WiFi.begin(wifiSSID.c_str(), wifiPassword.c_str());
   Serial.print("Connecting to Wi-Fi");
-  int move = 0;
   while (WiFi.status() != WL_CONNECTED)
   {
 
-    Ui_MenuObj.wait(20 + move,80, 5);
+    Ui_MenuObj.wait(true);
     Serial.print(".");
     delay(300);
-    move +=15;
   }
   if (WiFi.status() == WL_CONNECTED) {
-    Serial.println();
+
     Serial.print("Connected with IP: ");
     Serial.println(WiFi.localIP());
     Serial.println();
-    Ui_MenuObj.setText(String(WiFi.localIP()));
-     delay(5000);
+   // Ui_MenuObj.setText(String(WiFi.localIP()));
+     //delay(5000);
     return true;
   }
   else {
@@ -83,3 +81,28 @@ String ServerCommunication::getFireBasePath() {
 }
 
 /////////////////////////////////////////////////////////////////
+int ServerCommunication::getBarsSignal(){
+  // 5. High quality: 90% ~= -55db
+  // 4. Good quality: 75% ~= -65db
+  // 3. Medium quality: 50% ~= -75db
+  // 2. Low quality: 30% ~= -85db
+  // 1. Unusable quality: 8% ~= -96db
+  // 0. No signal
+  long rssi = WiFi.RSSI();
+  int bars;
+  
+  if (rssi > -55) { 
+    bars = 5;
+  } else if (rssi < -55 && rssi > -65) {
+    bars = 4;
+  } else if (rssi < -65 && rssi > -75) {
+    bars = 3;
+  } else if (rssi < -75 && rssi > -85) {
+    bars = 2;
+  } else if (rssi < -85 && rssi > -96) {
+    bars = 1;
+  } else {
+    bars = 0;
+  }
+  return bars;
+}
