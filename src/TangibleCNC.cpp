@@ -28,6 +28,27 @@ bool TangibleCNC::setWiFi(String wifiSSID, String wifiPassword) {
 bool TangibleCNC::setFirebase(String hostName, String authKey, String path) {
   return ServerCommunicationObj.setupFirebase(hostName,  authKey, path);
 }
+bool TangibleCNC::getConfigFirebase() {
+  return ServerCommunicationObj.getConfigFirebase();
+  return true; 
+}
+
+bool TangibleCNC::getModulesFirebase() {
+   boolean result = ServerCommunicationObj.getModulesFirebase();
+  if(result){
+  //  Ui_MenuObj.setBlockTypes(ServerCommunicationObj.getData());
+    Ui_MenuObj.setBlockTypes(ServerCommunicationObj.firebaseData);
+    Ui_MenuObj.setBlockType(4);
+    return true;
+  }
+  else{
+
+    return false;
+  }
+   
+  // 
+}
+
 
 
 

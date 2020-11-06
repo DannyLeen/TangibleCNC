@@ -16,6 +16,7 @@
 #include "Arduino.h"
 #include <TFT_eSPI.h>
 #include "Free_Fonts.h"
+#include "FirebaseESP32.h"
 
 //////////////////////////////////////////////////////////////
 
@@ -35,26 +36,25 @@ class Ui_Menu {
     int xyzPositionY[3] = {80, 120, 160};
     int randomNumber;
     void initScreen();
+    FirebaseJson json_;
+    int selected_;
+    String tempTitle_;
     
-    
-
   public:
+    Ui_Menu();
     void initUiMenu();
-    
-    void ui_degrees(int32_t posX, int32_t pos);
-    void ui_motor(int32_t posX, int32_t pos);
-    void ui_e(int32_t posX, int32_t pos);
-    void ui_x(int32_t posX, int32_t pos);
-    void ui_y(int32_t posX, int32_t pos);
-    void ui_z(int32_t posX, int32_t pos);
-    void ui_motorNumber(int32_t posX, int32_t posY);
-    void ui_rotate(int32_t posX, int32_t pos);
+  
+
     void wait(boolean waiting);
     void setWifiSymbol(int bars);
     void setFooter(String footerText);
-    Ui_Menu();
     void setTitle(String title);
     void updateUi();
+    void setBlockTypes(FirebaseData &blockData);
+    void setBlockType(int nmbr);
+    void showMenu(int selected);
+    void closeMenu();
+    void setParameters();
 };
 
 

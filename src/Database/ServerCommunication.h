@@ -26,8 +26,10 @@
 class ServerCommunication {
 
   private:
-    FirebaseData _firebaseData;
-    String _path;
+    
+    String path_;
+    void printResult(FirebaseData &data);
+
 
         
   public:
@@ -36,6 +38,10 @@ class ServerCommunication {
     String pushDate(String subPath, String dataToPush);
     String getFireBasePath();
     int getBarsSignal();
+    bool getConfigFirebase();
+    bool getModulesFirebase();
+    FirebaseData firebaseData;
+
 };
 
 

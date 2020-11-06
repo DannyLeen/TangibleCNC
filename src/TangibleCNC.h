@@ -36,6 +36,8 @@ class TangibleCNC {
     TangibleCNC(String firmware);
     bool setWiFi(String wifiSSID, String wifiPassword);
     bool setFirebase(String hostName, String authKey, String path);
+    bool getConfigFirebase();
+    bool getModulesFirebase();
     void screenUpdate();
     void loop();
     Ui_Menu Ui_MenuObj;

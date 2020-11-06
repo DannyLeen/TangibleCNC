@@ -124,63 +124,28 @@ void Ui_Menu::updateUi() {
   //  // tft.drawString(temp, 70, 230);
 }
 
-
-void Ui_Menu::ui_rotate(int posX, int posY) {
-
-
+void Ui_Menu::setParameters(){
 
 }
 
 
-void Ui_Menu::ui_x(int posX, int posY) {
-
-
-
+void Ui_Menu::setBlockTypes(FirebaseData &blockData){
+     json_ = blockData.jsonObject();
+    //Print all object data
 }
 
-
-void Ui_Menu::ui_y(int posX, int posY) {
-
-
-
+void Ui_Menu::setBlockType(int blockNmbr){
+    
+    json_.iteratorBegin();
+    String key, value = "";
+    int type = 0;
+      json_.iteratorGet(blockNmbr, type, key, value);
+    //  Serial.print(blockNmbr);
+      setTitle(key);
+      Serial.println(key);
+    json_.iteratorEnd();
 }
 
-
-void Ui_Menu::ui_z(int posX, int posY) {
-
-
-
-}
-
-
-void Ui_Menu::ui_e(int posX, int posY) {
-
-
-
-}
-
-
-void Ui_Menu::ui_motor(int posX, int posY) {
-
-
-
-}
-
-
-
-void Ui_Menu::ui_motorNumber(int posX, int posY) {
-
-
-
-}
-
-
-
-void Ui_Menu::ui_degrees(int posX, int posY) {
-
-
-
-}
 
 
 void Ui_Menu::setFooter(String footerText) {
@@ -205,6 +170,45 @@ void Ui_Menu::setWifiSymbol( int bars){
  
 }
 
+void Ui_Menu::showMenu(int position){
+    setTitle("Blocks");
+    
+    size_t len = json_.iteratorBegin();  
+    Serial.println(selected_);
 
+    if(selected_ >= 0 && selected_ <=len -1){
+          selected_ += position;
+    } 
+    if (selected_ == len){
+      selected_ = 0;
+    }
+    if (selected_ < 0){
+      selected_ = len -1;
+    }
 
+    String key, value = "";
+      int type = 0;
+      int color;
+     for (size_t i = 0; i < len; i++)
+     {
+
+      json_.iteratorGet(i, type, key, value);
+      if(i == selected_){
+          color = TFT_WHITE;
+          tempTitle_ = key;
+       }else{
+          color = TFT_ORANGE;
+       }
+      tft_.fillRoundRect(5, 40 + (15*i), tft_.width(), tft_.fontHeight() + 4, 4, color);
+      tft_.drawString(key, 10, 42 + (15*i));
+      
+     }
+  json_.iteratorEnd();
+  
+
+}
+void Ui_Menu::closeMenu(){
+    setTitle(tempTitle_);
+    updateUi();
+}
 /////////////////////////////////////////////////////////////////
